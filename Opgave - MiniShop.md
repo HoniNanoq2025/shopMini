@@ -1,6 +1,7 @@
 # 🧠 Uge 5 ReactJS: Filtrering, Sortering & Favoritter
 
 ## 🎯 Læringsmål
+- Altid MOBILE FIRST
 - Filtrere og sortere data i React
 - Bruge flere former for brugerinput
 - Gemme data med localStorage (favoritter)
@@ -33,11 +34,33 @@ API: [`https://dummyjson.com/products`](https://dummyjson.com/products)
 src/
 ├── App.jsx
 ├── App.module.css
+├── pages/
+├──── Home/
+│   ├── Home.jsx
+│   ├── Home.module.css
+├──── About/
+│   ├── About.jsx
+│   ├── About.module.css
+├──── Products/
+│   ├── Products.jsx
+│   ├── Products.module.css
 ├── components/
+├────── Footer/
+│   ├── Footer.jsx
+│   ├── Footer.module.css
+├────── Header/
+│   ├── Header.jsx
+│   ├── Header.module.css
+├────── Pagination/
+│   ├── Pagination.jsx
+│   ├── Pagination.module.css
+├────── FilterPanel/
 │   ├── FilterPanel.jsx
 │   ├── FilterPanel.module.css
+├────── ProductList/
 │   ├── ProductList.jsx
 │   ├── ProductList.module.css
+├────── ProductCard/
 │   ├── ProductCard.jsx
 │   └── ProductCard.module.css
 ```
@@ -95,6 +118,9 @@ const isFavorite = favorites.includes(product.id);
 ### 🟡 Øvet
 - Vis kun favoritter (tilføj "Vis kun favoritter" checkbox)
 - Gem sidste valgte sortering i `localStorage`
+- Navigation m. react-router-dom
+- Vis listen med `allProducts` i en underside kaldet `Products` - `ProductList`
+- Der skal være mulighed for at klikke sig ind på hver enkel produkt `ProductCard`
 
 ### 🔴 Avanceret
 - Kombinér flere kategorier (med checkboxes)
@@ -106,7 +132,7 @@ const isFavorite = favorites.includes(product.id);
 ## 🧼 Styling (module.css)
 - Brug `grid` i `ProductList`
 - Lav hover-effekter i `ProductCard`
-- Brug farver fra et simpelt farvetema
+- Brug farver fra et simpelt farvetema valgt igennem coolors.co
 
 ---
 
@@ -120,6 +146,19 @@ const isFavorite = favorites.includes(product.id);
 ## 📎 Videre læsning
 - https://react.dev/learn
 - https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage
+
+---
+
+## Aflevering
+I afleverer jeres opgave på github, hvor designet ligges ved siden af, som .pdf.
+Aflevering skal ske onsdag d. 21/5 kl. 16.00.
+
+---
+
+## Præsentation
+Torsdag d. 22/5 præsenterer I for jeres klassekammerater.
+
+Hver præsentation må maks. vare 20 min., hvor af de første 10 min. er selve præsentation af opgaven. De sidste 10 min. er til spørgsmål og diskussion.
 
 ---
 
