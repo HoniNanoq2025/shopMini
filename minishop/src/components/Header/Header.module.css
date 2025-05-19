@@ -1,0 +1,11 @@
+.menuHeader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 997;
+  height: 80px;
+  background-color: #0e3b43;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

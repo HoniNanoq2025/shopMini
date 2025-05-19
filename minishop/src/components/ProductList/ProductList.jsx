@@ -50,7 +50,6 @@ export default function ProductList() {
 
   return (
     <div className={styles.container}>
-      <h1>Produkter</h1>
       <div className={styles.listContainer}>
         <ul className={styles.movieList}>
           {products.map((product) => (
