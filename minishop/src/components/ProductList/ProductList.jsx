@@ -1,10 +1,11 @@
 import { useState, useEffect, use } from "react";
-import ProductCard from "../ProductCard/ProductCard";
+import { useNavigate } from "react-router-dom";
 import styles from "./ProductList.module.css";
 
 export default function ProductList() {
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -48,14 +49,30 @@ export default function ProductList() {
   };
 
   return (
-    <div className={styles.productList}>
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          product={product}
-          onAddToFavorites={onAddToFavorites}
-        />
-      ))}
+    <div className={styles.container}>
+      <h1>Produkter</h1>
+      <div className={styles.listContainer}>
+        <ul className={styles.movieList}>
+          {products.map((product) => (
+            <li key={product.id} className={styles.item}>
+              <img
+                src={product.images}
+                alt={product.title}
+                className={styles.productImage}
+              />
+              <button onClick={() => navigate(`/products/${product.id}`)}>
+                Read more
+              </button>
+              <button
+                onClick={() => toggleFavorites(product.id)}
+                className={styles.favoriteBtn}
+              >
+                {favorites.includes(product.id) ? "⭐" : "☆"} {product.title}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
