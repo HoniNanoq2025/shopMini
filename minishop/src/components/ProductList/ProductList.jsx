@@ -2,7 +2,7 @@ import { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProductList.module.css";
 
-export default function ProductList() {
+export default function ProductList({}) {
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
@@ -49,29 +49,28 @@ export default function ProductList() {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.listContainer}>
-        <ul className={styles.movieList}>
-          {products.map((product) => (
-            <li key={product.id} className={styles.item}>
-              <img
-                src={product.images}
-                alt={product.title}
-                className={styles.productImage}
-              />
-              <button onClick={() => navigate(`/products/${product.id}`)}>
-                Read more
-              </button>
-              <button
-                onClick={() => toggleFavorites(product.id)}
-                className={styles.favoriteBtn}
-              >
-                {favorites.includes(product.id) ? "⭐" : "☆"} {product.title}
-              </button>
-            </li>
-          ))}
-        </ul>
-      </div>
+    <div className={styles.grid}>
+      {products.map((product) => (
+        <div className={styles.card} key={product.id}>
+          <img src={product.thumbnail} alt={product.title} />
+          <h2>{product.title}</h2>
+          <div className={styles.details}>
+            <span>💰 {product.price} DKK</span>
+            <span>⭐ {product.rating}</span>
+          </div>
+          <div className={styles.buttons}>
+            <button onClick={() => navigate(`/products/${product.id}`)}>
+              Read more
+            </button>
+            <button
+              onClick={() => toggleFavorites(product.id)}
+              className={styles.favoriteBtn}
+            >
+              {favorites.includes(product.id) ? "❤️ Liked" : "🤍 Like"}
+            </button>
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
