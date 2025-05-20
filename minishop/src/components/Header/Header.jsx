@@ -1,11 +1,61 @@
-import "@fortawesome/fontawesome-free/css/all.min.css";
+import { useState } from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./Header.module.css";
-import NavigationBar from "../NavigationBar/NavigationBar";
+import { RxHamburgerMenu } from "react-icons/rx";
+import { IoClose } from "react-icons/io5";
 
 export default function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const handleLinkClick = () => setMenuIsOpen(false);
+
   return (
-    <header className={styles.menuHeader}>
-      <NavigationBar />
+    <header className={styles.header}>
+      <div className={styles.logo}>MySite</div>
+
+      <nav className={styles.desktopNav}>
+        <NavLink to="/" className={styles.link}>
+          Home
+        </NavLink>
+        <NavLink to="/about" className={styles.link}>
+          About
+        </NavLink>
+        <NavLink to="/products" className={styles.link}>
+          Products
+        </NavLink>
+      </nav>
+
+      <div className={styles.burgerIcon} onClick={() => setMenuOpen(true)}>
+        <RxHamburgerMenu size={28} />
+      </div>
+
+      <div className={`${styles.overlay} ${menuOpen ? styles.show : ""}`}>
+        <div className={styles.closeIcon} onClick={() => setMenuOpen(false)}>
+          <IoClose size={28} />
+        </div>
+        <nav className={styles.mobileNav}>
+          <NavLink
+            to="/"
+            className={styles.mobileLink}
+            onClick={handleLinkClick}
+          >
+            Home
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={styles.mobileLink}
+            onClick={handleLinkClick}
+          >
+            About
+          </NavLink>
+          <NavLink
+            to="/products"
+            className={styles.mobileLink}
+            onClick={handleLinkClick}
+          >
+            Products
+          </NavLink>
+        </nav>
+      </div>
     </header>
   );
 }
