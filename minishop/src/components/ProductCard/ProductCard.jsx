@@ -24,7 +24,10 @@ export default function ProductCard({ toggleFavorites, favorites }) {
     <div className={styles.card}>
       <img src={product.image} alt={product.name} className={styles.image} />
       <h2 className={styles.title}>{product.name}</h2>
-      <p className={styles.price}>{product.price} DKK</p>
+      <div className={styles.details}>
+        <span>💰 {product.price} DKK</span>
+        <span>⭐ {product.rating}</span>
+      </div>
       <div className={styles.description}>
         <p>{product.description}</p>
       </div>
