@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import styles from "./App.module.css";
 import Home from "./pages/Home/Home";
+import About from "./pages/About/About";
 import Products from "./pages/Products/Products";
 import ProductCard from "./components/ProductCard/ProductCard";
 import Header from "./components/Header/Header";
@@ -41,6 +42,7 @@ export default function App() {
       <main className={styles.main}>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
           <Route
             path="/products/:id"
