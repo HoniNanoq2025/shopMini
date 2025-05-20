@@ -3,7 +3,7 @@ import ProductList from "../../components/ProductList/ProductList";
 import styles from "./Products.module.css";
 import Pagination from "../../components/Pagination/Pagination";
 
-const PRODUCTS_PER_PAGE = 10;
+const PRODUCTS_PER_PAGE = 12;
 
 export default function Products() {
   const [products, setProducts] = useState([]);

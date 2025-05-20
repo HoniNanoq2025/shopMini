@@ -1,6 +1,8 @@
+import styles from "./Pagination.module.css";
+
 export default function Pagination({ page, totalPages, onPageChange }) {
   return (
-    <div>
+    <div className={styles.pagination}>
       <button onClick={() => onPageChange(page - 1)} disabled={page === 1}>
         Forrige
       </button>
