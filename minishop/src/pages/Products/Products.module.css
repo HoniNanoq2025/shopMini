@@ -10,18 +10,21 @@ select {
   border-radius: 5px;
   border: 1px solid #ccc;
   font-size: 1rem;
+    background-color: #fff;
 }
 
 .resetBtn {
-  margin: 10px 0;
-  background-color: rgb(177, 64, 64);
-  max-height: 45px;
-  max-width: 165px;
+  margin: 12px 0 0;
+  background-color: #B76D68;
+  letter-spacing: 0.7px;
 }
 
-.controls {
-  display: flex;
-  flex-direction: column;
+button {
+  color: white;
+  border: none;
+  padding: 0.6rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .sorting {
@@ -29,4 +32,6 @@ select {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
 }

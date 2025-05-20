@@ -92,7 +92,7 @@ export default function Products() {
           Nulstil
         </button>
       </div>
-      <ProductList products={products} />
+      <ProductList products={sortedFilteredProducts} />
       <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
     </div>
   );
