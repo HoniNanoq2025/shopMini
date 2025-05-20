@@ -9,53 +9,61 @@ import styles from "./Products.module.css";
 const PRODUCTS_PER_PAGE = 12;
 
 export default function Products() {
-  const [products, setProducts] = useState([]);
+  const [allProducts, setAllProducts] = useState([]); // Store all products
+  const [displayedProducts, setDisplayedProducts] = useState([]); // Products to display
   const [sortBy, setSortBy] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState([]);
   const [page, setPage] = useState(1);
-  const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
-  const totalPages = Math.ceil(total / PRODUCTS_PER_PAGE);
-
+  // Fetch all products once on initial load
   useEffect(() => {
-    const fetchProducts = async () => {
+    const fetchAllProducts = async () => {
+      setLoading(true);
       try {
-        const skip = (page - 1) * PRODUCTS_PER_PAGE;
+        // Fetch all products (or a reasonably large number)
         const response = await fetch(
-          `https://dummyjson.com/products?limit=${PRODUCTS_PER_PAGE}&skip=${skip}`
+          "https://dummyjson.com/products?limit=100"
         );
         const data = await response.json();
-        setProducts(data.products);
+
+        setAllProducts(data.products || []);
+
+        // Extract unique categories from products
         const uniqueCats = [
           ...new Set(data.products.map((product) => product.category)),
         ];
         setCategories(uniqueCats);
-        setTotal(data.total);
       } catch (error) {
         console.error("Fejl ved hentning af produkter:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchProducts();
-  }, [page]);
+    fetchAllProducts();
+  }, []);
 
-  const getFilteredandSortedProducts = () => {
-    let filtered = [...products];
+  // Apply filters and pagination whenever filters or page changes
+  useEffect(() => {
+    // Apply filters first
+    let filtered = [...allProducts];
 
-    if (selectedCategory !== "") {
+    if (selectedCategory) {
       filtered = filtered.filter(
         (product) => product.category === selectedCategory
       );
     }
 
-    if (searchTerm.trim() !== "") {
+    if (searchTerm.trim()) {
       filtered = filtered.filter((product) =>
         product.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
+    // Apply sorting
     if (sortBy === "title") {
       filtered.sort((a, b) => a.title.localeCompare(b.title));
     } else if (sortBy === "price") {
@@ -64,15 +72,55 @@ export default function Products() {
       filtered.sort((a, b) => b.rating - a.rating);
     }
 
-    return filtered;
-  };
+    // Apply pagination - slice the filtered products for current page
+    const startIndex = (page - 1) * PRODUCTS_PER_PAGE;
+    const endIndex = startIndex + PRODUCTS_PER_PAGE;
+    setDisplayedProducts(filtered.slice(startIndex, endIndex));
 
-  const sortedFilteredProducts = getFilteredandSortedProducts();
+    // If current page is now invalid, reset to page 1
+    if (page > 1 && startIndex >= filtered.length) {
+      setPage(1);
+    }
+  }, [allProducts, selectedCategory, searchTerm, sortBy, page]);
+
+  const totalFilteredItems = allProducts.filter((product) => {
+    let matchesCategory = true;
+    let matchesSearch = true;
+
+    if (selectedCategory) {
+      matchesCategory = product.category === selectedCategory;
+    }
+
+    if (searchTerm.trim()) {
+      matchesSearch = product.title
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase());
+    }
+
+    return matchesCategory && matchesSearch;
+  }).length;
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(totalFilteredItems / PRODUCTS_PER_PAGE)
+  );
 
   const handleReset = () => {
     setSortBy("");
     setSearchTerm("");
     setSelectedCategory("");
+    setPage(1);
+  };
+
+  // When changing filters, go back to page 1
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setPage(1);
+  };
+
+  const handleSearchChange = (term) => {
+    setSearchTerm(term);
+    setPage(1);
   };
 
   return (
@@ -80,11 +128,14 @@ export default function Products() {
       <h1>Produkter</h1>
 
       <div className={styles.sorting}>
-        <SearchFilter searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
+        <SearchFilter
+          searchTerm={searchTerm}
+          setSearchTerm={handleSearchChange}
+        />
         <FilterPanel
           categories={categories}
           selectedCategory={selectedCategory}
-          setSelectedCategory={setSelectedCategory}
+          setSelectedCategory={handleCategoryChange}
         />
         <SortDropdown sortBy={sortBy} setSortBy={setSortBy} />
 
@@ -92,8 +143,21 @@ export default function Products() {
           Nulstil
         </button>
       </div>
-      <ProductList products={sortedFilteredProducts} />
-      <Pagination page={page} totalPages={totalPages} onPageChange={setPage} />
+
+      {loading ? (
+        <div className={styles.loading}>Indlæser produkter...</div>
+      ) : displayedProducts.length > 0 ? (
+        <>
+          <ProductList products={displayedProducts} />
+          <Pagination
+            page={page}
+            totalPages={totalPages}
+            onPageChange={setPage}
+          />
+        </>
+      ) : (
+        <div className={styles.noResults}>Ingen produkter fundet</div>
+      )}
     </div>
   );
 }

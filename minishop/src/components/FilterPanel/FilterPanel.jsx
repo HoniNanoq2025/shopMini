@@ -16,7 +16,10 @@ export default function FilterPanel({
         <option value="">Alle</option>
         {categories.map((cat) => (
           <option key={cat} value={cat}>
-            {cat.charAt(0).toUpperCase() + cat.slice(1)}
+            {/* Format category name with first letter capitalized */}
+            {typeof cat === "string"
+              ? cat.charAt(0).toUpperCase() + cat.slice(1)
+              : cat}
           </option>
         ))}
       </select>
