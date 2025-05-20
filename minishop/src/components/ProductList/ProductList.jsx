@@ -22,13 +22,11 @@ export default function ProductList({ products }) {
     localStorage.setItem("favorites", JSON.stringify(favorites));
   }, [favorites]);
 
-  // funktion til at toggle status på favoritter
+  // Function to toggle favorites status
   const toggleFavorites = (id) => {
-    //hvis film allerede er en favorit fjernes den fra listen
     if (favorites.includes(id)) {
       setFavorites(favorites.filter((fav) => fav !== id));
     } else {
-      // Hvis film ikke er en favorit, tilføjes den til listen
       setFavorites([...favorites, id]);
     }
   };
@@ -48,7 +46,10 @@ export default function ProductList({ products }) {
               Read more
             </button>
             <button
-              onClick={() => toggleFavorites(product.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorites(product.id);
+              }}
               className={styles.favoriteBtn}
             >
               {favorites.includes(product.id) ? "❤️ Liked" : "🤍 Like"}
