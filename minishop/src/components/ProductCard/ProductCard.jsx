@@ -33,7 +33,7 @@ export default function ProductCard({ toggleFavorites, favorites }) {
           onClick={() => toggleFavorites(product.id)}
           className={styles.favoriteBtn}
         >
-          {favorites.includes(product.id) ? "⭐" : "☆"} {movie.title}
+          {favorites.includes(product.id) ? "❤️ Liked" : "🤍 Like"}
         </button>
       </div>
     </div>

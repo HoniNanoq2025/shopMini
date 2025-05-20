@@ -1,25 +1,10 @@
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./ProductList.module.css";
 
-export default function ProductList({}) {
-  const [products, setProducts] = useState([]);
+export default function ProductList({ products }) {
   const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await fetch(`https://dummyjson.com/products`);
-        const data = await response.json();
-        setProducts(data.products);
-      } catch (error) {
-        console.error("Fejl ved hentning af produkter:", error);
-      }
-    };
-
-    fetchProducts();
-  }, []);
 
   useEffect(() => {
     const savedFavorites = localStorage.getItem("favorites");
