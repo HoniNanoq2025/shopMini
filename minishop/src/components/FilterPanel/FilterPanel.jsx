@@ -1,10 +1,10 @@
 import styles from "./FilterPanel.module.css";
 
-export default function FilterPanel(
+export default function FilterPanel({
   categories,
   selectedCategory,
-  setSelectedCategory
-) {
+  setSelectedCategory,
+}) {
   return (
     <div className={styles.category}>
       <label htmlFor="category">Kategori</label>
@@ -14,8 +14,8 @@ export default function FilterPanel(
         onChange={(e) => setSelectedCategory(e.target.value)}
       >
         <option value="">Alle</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
+        {categories.map((cat) => (
+          <option key={cat} value={cat}>
             {cat.charAt(0).toUpperCase() + cat.slice(1)}
           </option>
         ))}
