@@ -25,7 +25,7 @@ export default function Products() {
       try {
         // Fetch all products (or a reasonably large number)
         const response = await fetch(
-          "https://dummyjson.com/products?limit=100"
+          "https://dummyjson.com/products?limit=200"
         );
         const data = await response.json();
 
