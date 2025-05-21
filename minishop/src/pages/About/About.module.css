@@ -1,0 +1,24 @@
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.about h1 {
+  font-size: 2rem;
+  color: #0e3b43;
+}
+
+.about p {
+  font-size: 1.2rem;
+  color: #0e3b43;
+  margin: 0 20px;
+  max-width: 700px;
+}
+
+.contact {
+  margin: 20px 0 0;
+  font-weight: bold;
+}

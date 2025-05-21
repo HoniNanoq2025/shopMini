@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap");
 
 .formContainer {
+  min-width: 300px;
   max-width: 400px;
   margin: 2rem auto;
   padding: 1.5rem;
@@ -29,10 +30,11 @@ textarea {
   font-size: 14px;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   outline: none;
-  border: #F7B32B solid 3px;
-  border-color: #F7B32B;
+  border: #f7b32b solid 3px;
+  border-color: #f7b32b;
   box-shadow: 0 0 5px rgba(98, 146, 158, 0.5);
 }
 
@@ -40,13 +42,13 @@ input:focus, textarea:focus {
   margin-bottom: 10px;
   background-color: #62929e;
   color: white;
-  font-family: 'Roboto', sans-serif;
-    font-size: 16px;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
 }
 
 .focusBtn {
   background-color: #b76d68;
   color: white;
-  font-family: 'Roboto', sans-serif;
-    font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
 }
