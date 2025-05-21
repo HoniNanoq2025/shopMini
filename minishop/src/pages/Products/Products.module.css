@@ -29,9 +29,43 @@ button {
 
 .sorting {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  align-items: stretch;
   gap: 1rem;
   margin-bottom: 1rem;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  
+  .container {
+    padding: 0 2rem;
+  }
+  
+  .sorting {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+  }
+  
+  .resetBtn {
+    width: auto;
+    margin: 0;
+  }
+  
+  select {
+    width: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .sorting {
+    flex-wrap: nowrap;
+  }
 }
