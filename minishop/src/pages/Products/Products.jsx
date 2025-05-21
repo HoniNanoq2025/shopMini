@@ -6,7 +6,7 @@ import SortDropdown from "../../components/SortDropdown/SortDropdown";
 import Pagination from "../../components/Pagination/Pagination";
 import styles from "./Products.module.css";
 
-const PRODUCTS_PER_PAGE = 12;
+const PRODUCTS_PER_PAGE = 8;
 
 export default function Products() {
   const [allProducts, setAllProducts] = useState([]); // Store all products
