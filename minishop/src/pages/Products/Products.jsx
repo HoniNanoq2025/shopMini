@@ -6,24 +6,26 @@ import SortDropdown from "../../components/SortDropdown/SortDropdown";
 import Pagination from "../../components/Pagination/Pagination";
 import styles from "./Products.module.css";
 
+// Antal produkter der vises per side
 const PRODUCTS_PER_PAGE = 8;
 
 export default function Products() {
-  const [allProducts, setAllProducts] = useState([]); // Store all products
-  const [displayedProducts, setDisplayedProducts] = useState([]); // Products to display
-  const [sortBy, setSortBy] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [categories, setCategories] = useState([]);
-  const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
+  // State variabler
+  const [allProducts, setAllProducts] = useState([]); // Gemmer alle produkter
+  const [displayedProducts, setDisplayedProducts] = useState([]); // Produkter der vises på nuværende side
+  const [sortBy, setSortBy] = useState(""); // Sorteringsparameter
+  const [searchTerm, setSearchTerm] = useState(""); // Søgeterm
+  const [selectedCategory, setSelectedCategory] = useState(""); // Valgt kategori
+  const [categories, setCategories] = useState([]); // Liste over alle kategorier
+  const [page, setPage] = useState(1); // Nuværende sidenummer
+  const [loading, setLoading] = useState(true); // Indlæsning status
 
-  // Fetch all products once on initial load
+  // Henter alle produkter én gang når komponenten indlæses
   useEffect(() => {
     const fetchAllProducts = async () => {
       setLoading(true);
       try {
-        // Fetch all products (or a reasonably large number)
+        // Henter alle produkter (eller en rimelig stor mængde)
         const response = await fetch(
           "https://dummyjson.com/products?limit=200"
         );
@@ -31,7 +33,7 @@ export default function Products() {
 
         setAllProducts(data.products || []);
 
-        // Extract unique categories from products
+        // Udtrækker unikke kategorier fra produkterne
         const uniqueCats = [
           ...new Set(data.products.map((product) => product.category)),
         ];
@@ -46,43 +48,46 @@ export default function Products() {
     fetchAllProducts();
   }, []);
 
-  // Apply filters and pagination whenever filters or page changes
+  // Anvender filtre og paginering når filtre eller side ændres
   useEffect(() => {
-    // Apply filters first
+    // Anvender filtre først
     let filtered = [...allProducts];
 
+    // Filtrerer efter kategori hvis en er valgt
     if (selectedCategory) {
       filtered = filtered.filter(
         (product) => product.category === selectedCategory
       );
     }
 
+    // Filtrerer efter søgeterm hvis der er indtastet en
     if (searchTerm.trim()) {
       filtered = filtered.filter((product) =>
         product.title.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Apply sorting
+    // Anvender sortering
     if (sortBy === "title") {
-      filtered.sort((a, b) => a.title.localeCompare(b.title));
+      filtered.sort((a, b) => a.title.localeCompare(b.title)); // Alfabetisk efter titel
     } else if (sortBy === "price") {
-      filtered.sort((a, b) => a.price - b.price);
+      filtered.sort((a, b) => a.price - b.price); // Stigende efter pris
     } else if (sortBy === "rating") {
-      filtered.sort((a, b) => b.rating - a.rating);
+      filtered.sort((a, b) => b.rating - a.rating); // Faldende efter rating
     }
 
-    // Apply pagination - slice the filtered products for current page
+    // Anvender paginering - udskærer de filtrerede produkter for den aktuelle side
     const startIndex = (page - 1) * PRODUCTS_PER_PAGE;
     const endIndex = startIndex + PRODUCTS_PER_PAGE;
     setDisplayedProducts(filtered.slice(startIndex, endIndex));
 
-    // If current page is now invalid, reset to page 1
+    // Hvis nuværende side er ugyldig, nulstil til side 1
     if (page > 1 && startIndex >= filtered.length) {
       setPage(1);
     }
   }, [allProducts, selectedCategory, searchTerm, sortBy, page]);
 
+  // Beregner det totale antal produkter efter filtrering
   const totalFilteredItems = allProducts.filter((product) => {
     let matchesCategory = true;
     let matchesSearch = true;
@@ -100,11 +105,13 @@ export default function Products() {
     return matchesCategory && matchesSearch;
   }).length;
 
+  // Beregner det totale antal sider baseret på filtrerede produkter
   const totalPages = Math.max(
     1,
     Math.ceil(totalFilteredItems / PRODUCTS_PER_PAGE)
   );
 
+  // Nulstiller alle filtre og sortering
   const handleReset = () => {
     setSortBy("");
     setSearchTerm("");
@@ -112,12 +119,13 @@ export default function Products() {
     setPage(1);
   };
 
-  // When changing filters, go back to page 1
+  // Når kategori ændres, gå tilbage til side 1
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setPage(1);
   };
 
+  // Når søgeterm ændres, gå tilbage til side 1
   const handleSearchChange = (term) => {
     setSearchTerm(term);
     setPage(1);
@@ -127,6 +135,7 @@ export default function Products() {
     <div className={styles.container}>
       <h1>Produkter</h1>
 
+      {/* Filter og sorteringssektion */}
       <div className={styles.sorting}>
         <SearchFilter
           searchTerm={searchTerm}
@@ -144,10 +153,12 @@ export default function Products() {
         </button>
       </div>
 
+      {/* Betinget rendering baseret på loading status og resultater */}
       {loading ? (
         <div className={styles.loading}>Indlæser produkter...</div>
       ) : displayedProducts.length > 0 ? (
         <>
+          {/* Viser produktlisten og paginering hvis der er resultater */}
           <ProductList products={displayedProducts} />
           <Pagination
             page={page}

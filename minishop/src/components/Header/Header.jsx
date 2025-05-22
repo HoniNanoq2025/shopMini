@@ -6,7 +6,7 @@ import { IoClose } from "react-icons/io5";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const handleLinkClick = () => setMenuIsOpen(false);
+  const handleLinkClick = () => setMenuOpen(false);
 
   return (
     <header className={styles.header}>
