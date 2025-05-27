@@ -7,6 +7,7 @@ import Products from "./pages/Products/Products";
 import ProductCard from "./components/ProductCard/ProductCard";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
+import CookieBanner from "./components/CookieBanner/CookieBanner";
 
 export default function App() {
   const [favorites, setFavorites] = useState([]);
@@ -55,6 +56,7 @@ export default function App() {
           />
         </Routes>
       </main>
+      <CookieBanner />
       <Footer />
     </div>
   );
