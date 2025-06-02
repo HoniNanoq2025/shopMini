@@ -4,6 +4,7 @@ import styles from "./App.module.css";
 import Home from "./pages/Home/Home";
 import About from "./pages/About/About";
 import Products from "./pages/Products/Products";
+import Contact from "./pages/Contact/Contact";
 import ProductCard from "./components/ProductCard/ProductCard";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
@@ -45,6 +46,7 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/contact" element={<Contact />} />
           <Route
             path="/products/:id"
             element={

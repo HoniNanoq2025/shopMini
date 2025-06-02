@@ -22,6 +22,9 @@ export default function Header() {
         <NavLink to="/products" className={styles.link}>
           Products
         </NavLink>
+        <NavLink to="/contact" className={styles.link}>
+          Contact us
+        </NavLink>
       </nav>
 
       <div className={styles.burgerIcon} onClick={() => setMenuOpen(true)}>
@@ -53,6 +56,13 @@ export default function Header() {
             onClick={handleLinkClick}
           >
             Products
+          </NavLink>
+          <NavLink
+            to="/contact"
+            className={styles.mobileLink}
+            onClick={handleLinkClick}
+          >
+            Contact us
           </NavLink>
         </nav>
       </div>
